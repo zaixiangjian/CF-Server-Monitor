@@ -130,7 +130,25 @@ const translations = reactive({
     recommendUninstall: 'Recommend running uninstall command on target server first to stop agent',
     clickToCopyCmd: 'Click copy button to copy uninstall command',
     confirmDelete: 'Confirm Delete',
-    cancelAction: 'Cancel'
+    cancelAction: 'Cancel',
+    default: 'Default',
+    editConf: 'Edit Configuration',
+    deleteConf: 'Delete Configuration',
+    errorInvalidUsername: '[ERROR] Invalid username or password',
+    configSaved: '[OK] Configuration saved! Reloading...',
+    saveFailed: '[ERROR] Save failed: ',
+    saveFailedUnknown: '[ERROR] Save failed: Unknown error',
+    addFailed: '[ERROR] Add failed',
+    serverAdded: '[OK] Server added',
+    serverUpdated: '[OK] Server updated',
+    deleteFailed: '[ERROR] Delete failed',
+    selectServers: '[WARN] Please select servers to delete',
+    confirmDeleteServers: '[?] Delete ',
+    irreversible: ' selected servers? This action is irreversible.',
+    imageSizeWarning: '[WARN] Image size > 800KB, consider using external URL',
+    enterServerName: '[WARN] Please enter a server name',
+    onlineStatus: '● ONLINE',
+    offlineStatus: '● OFFLINE'
   },
   zh: {
     theme: '主题',
@@ -261,7 +279,25 @@ const translations = reactive({
     recommendUninstall: '建议先在目标服务器上执行卸载命令，以停止探针服务',
     clickToCopyCmd: '点击左侧复制按钮即可复制卸载命令',
     confirmDelete: '确认删除',
-    cancelAction: '取消'
+    cancelAction: '取消',
+    default: '默认',
+    editConf: '编辑配置',
+    deleteConf: '删除配置',
+    errorInvalidUsername: '[错误] 用户名或密码无效',
+    configSaved: '[成功] 配置已保存！正在刷新...',
+    saveFailed: '[错误] 保存失败：',
+    saveFailedUnknown: '[错误] 保存失败：未知错误',
+    addFailed: '[错误] 添加失败',
+    serverAdded: '[成功] 服务器已添加',
+    serverUpdated: '[成功] 服务器已更新',
+    deleteFailed: '[错误] 删除失败',
+    selectServers: '[警告] 请选择要删除的服务器',
+    confirmDeleteServers: '[?] 确定要删除 ',
+    irreversible: ' 个选中的服务器吗？此操作不可撤销。',
+    imageSizeWarning: '[警告] 图片大小超过 800KB，建议使用外部链接',
+    enterServerName: '[警告] 请输入服务器名称',
+    onlineStatus: '● 在线',
+    offlineStatus: '● 离线'
   }
 })
 

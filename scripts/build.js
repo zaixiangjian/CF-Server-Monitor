@@ -17,10 +17,21 @@ console.log('Building frontend...');
 execSync('npx vite build', { cwd: rootDir, stdio: 'inherit' });
 
 console.log('Copying static assets...');
-// 直接复制所有 public 目录的内容到 dist（已经没有旧的 HTML 文件了）
 if (fs.existsSync(publicDir)) {
   fs.copySync(publicDir, distDir);
   console.log('Copied all static assets');
+}
+
+// 替换时间戳
+console.log('Replacing timestamp in index.html...');
+const indexHtmlPath = path.join(distDir, 'index.html');
+if (fs.existsSync(indexHtmlPath)) {
+  const timestamp = Date.now();
+  let html = fs.readFileSync(indexHtmlPath, 'utf8');
+  // 替换所有 ?t= 后面的数字为新的时间戳
+  html = html.replace(/(\?t=)\d+/g, `$1${timestamp}`);
+  fs.writeFileSync(indexHtmlPath, html, 'utf8');
+  console.log(`Updated timestamp to ${timestamp}`);
 }
 
 console.log('Build complete!');

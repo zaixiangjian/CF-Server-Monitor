@@ -1,10 +1,18 @@
 # CF-Server-Monitor-Pro
 
-**版本：V1.3**
+**版本：V2.0**
 
-一个基于 Cloudflare Workers + D1 的多服务器监控探针系统，支持实时监控、历史数据查看、延迟追踪、地图展示等功能。
+一个基于 Cloudflare Workers + D1 的多服务器监控探针系统，支持实时监控、历史数据查看、延迟追踪、地图展示等功能。基于 [CF-Server-Monitor-Pro V1.3](https://github.com/a63414262/CF-Server-Monitor-Pro) 深度二次开发
 
-本项目基于[CF-Server-Monitor-Pro](https://github.com/a63414262/CF-Server-Monitor-Pro)深度二次开发
+## 🔄 V2.0 版本升级说明
+
+本次版本更新带来了以下重大改进：
+
+- **🎨 Vue 前后端分离**：采用 Vue 3 + Vite 重构前端架构，实现前后端完全分离，提升开发效率和代码可维护性
+- **🧪 本地测试模拟数据**：新增本地测试数据生成功能，无需部署即可在本地进行完整的功能测试和调试
+- **🌐 双语支持**：全面支持中文和英文界面，可在设置中自由切换，方便国际化使用
+- **⚡ 功能优化与修复**：全面优化性能，提升响应速度，修复多项已知问题，提供更稳定的使用体验
+
 
 ## ✨ 功能特点
 
@@ -12,39 +20,62 @@
 - 📈 **历史图表**：支持 1/3/6/12/24 小时历史数据查看
 - 🌍 **全球地图**：可视化展示服务器分布
 - 🔔 **离线告警**：支持 Telegram 和企业微信通知
-- 🎨 **多主题**：2 种预设主题 + 自定义 CSS
 - 📱 **响应式**：支持桌面端和移动端
 - 🔄 **自动部署**：GitHub Actions 一键部署
 - 🗺️ **延迟追踪**：国内电信/联通/移动/字节延迟监测
 - 🔒 **服务器隐藏**：可设置特定服务器对非登录用户隐藏
 - ↕️ **拖拽排序**：后台拖拽调整服务器显示顺序
+- 🌐 **双语支持**：支持中文和英文界面自由切换
+- 🧪 **本地测试**：支持本地模拟数据生成，方便开发和测试
 
 ## 📁 项目结构
 
 ```
-server-monitor/
+CF-Server-Monitor/
 ├── public/
-│   └── install.sh              # 一键安装脚本（含卸载）
+│   ├── themes/
+│   │   └── light.css           # 白色主题样式
+│   ├── install.sh              # 一键安装脚本（含卸载）
+│   ├── logo.svg                # Logo
+│   └── style.css               # 全局样式
 ├── src/
-│   ├── index.js                # 主入口 - 路由分发
+│   ├── index.js                # 后端主入口 - 路由分发
 │   ├── database/
 │   │   └── schema.js           # 数据库初始化、历史数据存储
 │   ├── middleware/
 │   │   └── auth.js             # 认证中间件
 │   ├── handlers/
 │   │   ├── admin.js            # 后台管理 API
-│   │   ├── admin-ui.js         # 后台管理界面
-│   │   ├── update.js           # 数据上报处理
-│   │   ├── dashboard.js        # 前台大盘首页
-│   │   └── server-detail.js    # 服务器详情页（24h历史）
+│   │   ├── dashboard.js        # 前台大盘 API
+│   │   ├── frontend.js          # 前端资源服务
+│   │   └── update.js           # 数据上报处理
 │   ├── services/
 │   │   └── notification.js     # 通知服务
 │   ├── utils/
 │   │   ├── format.js           # 格式化工具
 │   │   └── settings.js         # 设置管理
-│   └── themes/
-│       └── styles.js           # 主题样式
+│   └── frontend/               # Vue 3 前端应用
+│       ├── components/         # Vue 组件
+│       │   ├── ServerCard.vue
+│       │   ├── TerminalHeader.vue
+│       │   └── Footer.vue
+│       ├── views/             # 页面视图
+│       │   ├── Dashboard.vue
+│       │   ├── ServerDetail.vue
+│       │   └── Admin.vue
+│       ├── router/
+│       │   └── index.js        # Vue Router 配置
+│       ├── utils/
+│       │   ├── api.js          # API 请求封装
+│       │   └── i18n.js         # 国际化配置
+│       ├── App.vue             # 根组件
+│       └── main.js             # 前端入口
+├── scripts/
+│   └── build.js                # 前端构建脚本
+├── test/
+│   └── generate-sql.js         # 测试数据生成工具
 ├── package.json
+├── vite.config.js              # Vite 配置
 ├── wrangler.toml
 └── .github/
     └── workflows/
@@ -205,6 +236,14 @@ curl -sL https://你的项目.你的子域.workers.dev/install.sh | bash -s unin
 
 ## 📊 使用说明
 
+### 语言切换
+
+V2.0 版本支持中文和英文界面切换：
+
+1. 点击界面右上角的语言切换按钮
+2. 可实时在中文和英文之间切换
+3. 语言设置会保存在浏览器本地
+
 ### 前台大盘
 
 访问 `https://你的项目.你的子域.workers.dev/` 查看：
@@ -297,27 +336,43 @@ curl -sL https://你的项目.你的子域.workers.dev/install.sh | bash -s unin
 
 ## 🛠️ 本地开发
 
+### 环境要求
+
+- Node.js 18+
+- npm 或 pnpm
+
+### 开发步骤
+
 ```bash
 # 安装依赖
 npm install
-   ```
+
 # 创建 D1 数据库
 npx wrangler d1 create server-monitor-db
 
 # 更新 wrangler.toml 中的 database_id
 
-# 前端依赖
-npm run build:frontend
-
-# 启动本地开发服务器
+# 前端开发模式（热重载）
 npm run dev
 
-# 导入测试数据
-见 /test/README.md 中的说明
+# 构建前端生产版本
+npm run build:frontend
 
-# 部署
+# 导入测试数据（可选）
+# 详见 /test/README.md
+
+# 部署到 Cloudflare Workers
 npm run deploy
 ```
+
+### 本地测试数据
+
+V2.0 版本支持生成本地测试数据，方便在部署前进行功能测试：
+
+1. 进入 `test` 目录查看详细说明
+2. 运行测试数据生成脚本
+3. 导入生成的 SQL 数据到本地 D1 数据库
+4. 启动本地开发服务器进行测试
 
 ## 📝 环境变量说明
 
@@ -350,6 +405,8 @@ MIT License
 
 - [CF-Server-Monitor-Pro](https://github.com/a63414262/CF-Server-Monitor-Pro)
 - [Cloudflare Workers](https://workers.cloudflare.com/)
+- [Vue 3](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
 - [Chart.js](https://www.chartjs.org/)
 - [Leaflet](https://leafletjs.com/)
 

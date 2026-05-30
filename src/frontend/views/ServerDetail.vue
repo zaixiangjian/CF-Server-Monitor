@@ -208,9 +208,7 @@
       </div>
     </div>
 
-    <footer class="footer">
-      V1.3 | {{ trans.poweredBy }} <a href="https://github.com/huilang-me/CF-Server-Monitor" target="_blank">CF-Server-Monitor</a>
-    </footer>
+    <Footer />
   </div>
 </template>
 
@@ -218,6 +216,7 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import TerminalHeader from '../components/TerminalHeader.vue'
+import Footer from '../components/Footer.vue'
 import { fetchServerDetail, fetchAllHistory, fetchAggHistory, formatBytes } from '../utils/api'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-date-fns'

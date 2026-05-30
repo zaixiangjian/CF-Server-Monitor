@@ -4,55 +4,55 @@
       <div style="background:var(--bg-secondary);border:1px solid var(--border-active);border-radius:6px;padding:32px;width:420px;max-width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
         <div style="text-align:center;margin-bottom:24px;">
           <div style="font-size:40px;margin-bottom:12px;">🔐</div>
-          <h2 style="color:var(--accent-green);margin:0;font-size:18px;text-transform:uppercase;letter-spacing:1px;">Admin Login</h2>
-          <p style="color:var(--text-muted);font-size:12px;margin-top:8px;">Enter your credentials to continue</p>
+          <h2 style="color:var(--accent-green);margin:0;font-size:18px;text-transform:uppercase;letter-spacing:1px;">{{ trans.adminLogin }}</h2>
+          <p style="color:var(--text-muted);font-size:12px;margin-top:8px;">{{ trans.enterCredentials }}</p>
         </div>
         <form @submit.prevent="handleLogin">
           <div style="margin-bottom:16px;">
-            <label style="display:block;color:var(--text-muted);font-size:11px;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Username</label>
+            <label style="display:block;color:var(--text-muted);font-size:11px;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">{{ trans.username }}</label>
             <input type="text" v-model="loginForm.username" required style="width:100%;padding:10px 12px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:4px;color:var(--text-primary);font-family:var(--terminal-font);font-size:13px;" placeholder="admin">
           </div>
           <div style="margin-bottom:20px;">
-            <label style="display:block;color:var(--text-muted);font-size:11px;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Password</label>
+            <label style="display:block;color:var(--text-muted);font-size:11px;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">{{ trans.password }}</label>
             <input type="password" v-model="loginForm.password" required style="width:100%;padding:10px 12px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:4px;color:var(--text-primary);font-family:var(--terminal-font);font-size:13px;" placeholder="••••••••">
           </div>
           <div v-if="loginError" id="login-error" style="padding:10px;background:rgba(248,81,73,0.1);border:1px solid rgba(248,81,73,0.3);border-radius:4px;color:var(--accent-red);font-size:12px;margin-bottom:16px;text-align:center;">{{ loginError }}</div>
-          <button type="submit" style="width:100%;padding:12px;background:var(--accent-green);border:1px solid var(--accent-green);border-radius:4px;color:#000;font-family:var(--terminal-font);font-size:14px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all 0.2s;">Login</button>
+          <button type="submit" style="width:100%;padding:12px;background:var(--accent-green);border:1px solid var(--accent-green);border-radius:4px;color:#000;font-family:var(--terminal-font);font-size:14px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all 0.2s;">{{ trans.login }}</button>
         </form>
       </div>
     </div>
 
     <div v-else class="container" id="admin-content">
-      <TerminalHeader title="Admin Panel" />
+      <TerminalHeader :title="trans.adminPanel" />
       
       <div class="main-panel">
         <div class="panel-header">
           <div class="panel-title">
-            <span class="prompt">$</span> sudo systemctl status
+            <span class="prompt">$</span> {{ trans.sudoStatus }}
           </div>
           <div class="header-actions">
-            <button @click="refreshStats" class="btn">↻ REFRESH</button>
-            <button @click="logout" class="btn btn-red">🚪 Logout</button>
-            <a href="/" class="btn">▸ DASHBOARD</a>
+            <button @click="refreshStats" class="btn">↻ {{ trans.refresh }}</button>
+            <button @click="logout" class="btn btn-red">🚪 {{ trans.logout }}</button>
+            <a href="/" class="btn">▸ {{ trans.dashboard }}</a>
           </div>
         </div>
 
         <div class="stats-grid" id="stats-panel">
           <div class="stat-card">
             <div class="stat-value" id="stat-total">{{ stats.total }}</div>
-            <div class="stat-label">Total Servers</div>
+            <div class="stat-label">{{ trans.totalServers }}</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="stat-online">{{ stats.online }}</div>
-            <div class="stat-label">Online</div>
+            <div class="stat-label">{{ trans.onlineCount }}</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="stat-offline">{{ stats.offline }}</div>
-            <div class="stat-label">Offline</div>
+            <div class="stat-label">{{ trans.offlineCount }}</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="stat-avg-cpu">{{ stats.avg_cpu }}%</div>
-            <div class="stat-label">Avg CPU</div>
+            <div class="stat-label">{{ trans.avgCpu }}</div>
           </div>
         </div>
       </div>
@@ -63,31 +63,31 @@
             class="tab-btn" 
             :class="{ active: activeTab === 'servers' }"
             @click="activeTab = 'servers'"
-          >▸ Servers</button>
+          >▸ {{ trans.servers }}</button>
           <button 
             class="tab-btn" 
             :class="{ active: activeTab === 'settings' }"
             @click="activeTab = 'settings'"
-          >▸ Settings</button>
+          >▸ {{ trans.settings }}</button>
         </div>
 
         <div id="tab-servers" class="tab-content" :class="{ active: activeTab === 'servers' }">
           <div class="alert alert-info">
             <span class="alert-icon">[i]</span>
-            <span>点击 <strong>📋</strong> 复制安装命令，在目标服务器上执行，即可完成探针部署。后面跟一个上报间隔参数，单位为秒</span>
+            <span>{{ trans.clickToCopy }} <strong>📋</strong> {{ trans.installCommand }}。{{ trans.interval }}</span>
           </div>
 
           <div class="toolbar">
-            <input type="text" v-model="newServerName" class="toolbar-input" placeholder="> Enter server name...">
+            <input type="text" v-model="newServerName" class="toolbar-input" :placeholder="'> ' + trans.serverName + '...'">
             <select v-model="newServerGroup" class="toolbar-select">
               <option v-for="group in groups" :key="group" :value="group">{{ group }}</option>
             </select>
-            <button @click="addServer" class="btn btn-primary">+ ADD SERVER</button>
+            <button @click="addServer" class="btn btn-primary">+ {{ trans.addServer }}</button>
           </div>
 
           <div class="batch-actions">
-            <button @click="batchDelete" class="btn btn-red">🗑 BATCH DELETE</button>
-            <button @click="toggleSelectAll" class="btn">☐ TOGGLE ALL</button>
+            <button @click="batchDelete" class="btn btn-red">🗑 {{ trans.batchDelete }}</button>
+            <button @click="toggleSelectAll" class="btn">☐ {{ trans.toggleAll }}</button>
           </div>
 
           <div class="table-wrapper">
@@ -96,19 +96,19 @@
                 <tr>
                   <th style="width:35px; text-align:center;">↕️</th>
                   <th style="width:30px;"><input type="checkbox" id="select-all" @change="handleSelectAll" style="accent-color: var(--accent-green);"></th>
-                  <th>HOSTNAME</th>
-                  <th>GROUP</th>
-                  <th>PRICE</th>
-                  <th>EXPIRE</th>
-                  <th>BANDWIDTH</th>
-                  <th>TRAFFIC</th>
-                  <th>STATUS</th>
-                  <th>ACTIONS</th>
+                  <th>{{ trans.hostname.toUpperCase() }}</th>
+                  <th>{{ trans.group.toUpperCase() }}</th>
+                  <th>{{ trans.price.toUpperCase() }}</th>
+                  <th>{{ trans.expire.toUpperCase() }}</th>
+                  <th>{{ trans.bandwidth.toUpperCase() }}</th>
+                  <th>{{ trans.traffic.toUpperCase() }}</th>
+                  <th>{{ trans.status.toUpperCase() }}</th>
+                  <th>{{ trans.actions.toUpperCase() }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-if="servers.length === 0">
-                  <td colspan="10" class="empty-state"><span class="empty-icon">📦</span> No servers configured</td>
+                  <td colspan="10" class="empty-state"><span class="empty-icon">📦</span> {{ trans.noServers }}</td>
                 </tr>
                 <tr 
                   v-for="server in servers" 
@@ -120,7 +120,7 @@
                   @dragover.prevent
                   @drop="handleDrop($event, server.id)"
                 >
-                  <td class="drag-handle" style="text-align:center; cursor:move; user-select:none;" title="拖拽排序">⋮⋮</td>
+                  <td class="drag-handle" style="text-align:center; cursor:move; user-select:none;" :title="trans.dragSort">⋮⋮</td>
                   <td style="text-align:center;"><input type="checkbox" class="server-checkbox" :value="server.id" v-model="selectedServers"></td>
                   <td>
                     <div style="display:flex; align-items:center; gap:8px;">
@@ -131,7 +131,7 @@
                       <a :href="'/server/' + server.id" style="color:var(--text-primary); font-weight:bold; text-decoration:none;">{{ server.name }}</a>
                     </div>
                   </td>
-                  <td><span class="group-tag">{{ server.server_group || 'Default' }}</span></td>
+                  <td><span class="group-tag">{{ server.server_group || trans.default }}</span></td>
                   <td><span class="price-tag">{{ server.price || '-' }}</span></td>
                   <td><span class="date-text">{{ server.expire_date || '-' }}</span></td>
                   <td><span class="spec-text">{{ server.bandwidth || '-' }}</span></td>
@@ -146,9 +146,9 @@
                         <input type="text" readonly :value="getInstallCommand(server.id)" class="cmd-input">
                       </div>
                       <div class="action-btns">
-                        <button @click="copyCmd(getInstallCommand(server.id))" class="btn btn-icon btn-green" title="复制命令">📋</button>
-                        <button @click="openEditModal(server)" class="btn btn-icon btn-blue" title="编辑">✏️</button>
-                        <button @click="openDeleteModal(server.id)" class="btn btn-icon btn-red" title="删除">🗑️</button>
+                        <button @click="copyCmd(getInstallCommand(server.id))" class="btn btn-icon btn-green" :title="trans.copy">📋</button>
+                        <button @click="openEditModal(server)" class="btn btn-icon btn-blue" :title="trans.edit">✏️</button>
+                        <button @click="openDeleteModal(server.id)" class="btn btn-icon btn-red" :title="trans.delete">🗑️</button>
                       </div>
                     </div>
                   </td>
@@ -161,14 +161,14 @@
         <div id="tab-settings" class="tab-content" :class="{ active: activeTab === 'settings' }">
           <div class="settings-grid">
             <div class="settings-section">
-              <div class="section-title"><span>▸</span> Appearance</div>
+              <div class="section-title"><span>▸</span> {{ trans.appearance }}</div>
 
               <div class="form-group">
-                <label class="form-label">Background Image</label>
+                <label class="form-label">{{ trans.bgImage }}</label>
                 <div style="display:flex; gap:8px;">
                   <input type="text" v-model="settings.custom_bg" class="form-input" placeholder="https://..." style="flex:1;">
                   <div class="upload-btn-wrapper">
-                    <button class="btn" style="margin:0;">📁 UPLOAD</button>
+                    <button class="btn" style="margin:0;">📁 {{ trans.upload }}</button>
                     <input type="file" accept="image/*" @change="uploadBg">
                   </div>
                 </div>
@@ -176,64 +176,66 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label">Custom &lt;head&gt;</label>
-                <textarea v-model="settings.custom_head" class="form-textarea" rows="3" placeholder="<link rel='stylesheet' href='...'"></textarea>
+                <label class="form-label">{{ trans.customHead }}</label>
+                <textarea v-model="settings.custom_head" class="form-textarea" rows="3" placeholder="<link rel='stylesheet' href='...'">
+                </textarea>
               </div>
 
               <div class="form-group">
-                <label class="form-label">Custom Script (footer)</label>
-                <textarea v-model="settings.custom_script" class="form-textarea" rows="4" placeholder="console.log('Hello');"></textarea>
+                <label class="form-label">{{ trans.customScript }}</label>
+                <textarea v-model="settings.custom_script" class="form-textarea" rows="4" placeholder="console.log('Hello');">
+                </textarea>
               </div>
             </div>
 
             <div>
               <div class="settings-section" style="margin-bottom: 20px;">
-                <div class="section-title"><span>▸</span> Display Options</div>
+                <div class="section-title"><span>▸</span> {{ trans.displayOptions }}</div>
 
                 <div class="checkbox-item">
                   <input type="checkbox" id="cfg_is_public" v-model="settings.is_public">
-                  <label><b>Public Access</b></label>
+                  <label><b>{{ trans.publicAccess }}</b></label>
                 </div>
 
                 <div class="checkbox-item">
                   <input type="checkbox" id="cfg_show_price" v-model="settings.show_price">
-                  <label>Show <b>Price</b></label>
+                  <label>{{ trans.showPrice }}</label>
                 </div>
 
                 <div class="checkbox-item">
                   <input type="checkbox" id="cfg_show_expire" v-model="settings.show_expire">
-                  <label>Show <b>Expiration</b></label>
+                  <label>{{ trans.showExpire }}</label>
                 </div>
 
                 <div class="checkbox-item">
                   <input type="checkbox" id="cfg_show_bw" v-model="settings.show_bw">
-                  <label>Show <b>Bandwidth</b></label>
+                  <label>{{ trans.showBw }}</label>
                 </div>
 
                 <div class="checkbox-item">
                   <input type="checkbox" id="cfg_show_tf" v-model="settings.show_tf">
-                  <label>Show <b>Traffic Quota</b></label>
+                  <label>{{ trans.showTf }}</label>
                 </div>
               </div>
 
               <div class="settings-section">
-                <div class="section-title"><span>▸</span> Notifications</div>
+                <div class="section-title"><span>▸</span> {{ trans.notifications }}</div>
 
                 <div class="form-group">
-                  <label class="form-label">Offline Alert</label>
+                  <label class="form-label">{{ trans.offlineAlert }}</label>
                   <select v-model="settings.tg_notify" class="form-select">
-                    <option value="false">[OFF] Disabled</option>
-                    <option value="true">[ON] Notify after 5min offline</option>
+                    <option value="false">[OFF] {{ trans.disabled }}</option>
+                    <option value="true">[ON] {{ trans.notifyOffline }}</option>
                   </select>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label">Telegram Token / WeChat Webhook</label>
+                  <label class="form-label">{{ trans.telegramToken }}</label>
                   <input type="password" v-model="settings.tg_bot_token" class="form-input" placeholder="Bot Token or Webhook URL">
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label">Chat ID</label>
+                  <label class="form-label">{{ trans.chatId }}</label>
                   <input type="password" v-model="settings.tg_chat_id" class="form-input" placeholder="Telegram Chat ID (optional for WeChat)">
                 </div>
               </div>
@@ -241,7 +243,7 @@
           </div>
 
           <div style="margin-top: 20px; text-align: right;">
-            <button @click="saveSettings" class="btn btn-primary" style="padding: 12px 24px; font-size: 14px;">💾 SAVE CONFIGURATION</button>
+            <button @click="saveSettings" class="btn btn-primary" style="padding: 12px 24px; font-size: 14px;">💾 {{ trans.saveConfig }}</button>
           </div>
         </div>
       </div>
@@ -255,32 +257,32 @@
           <input type="hidden" v-model="editForm.id">
 
           <div class="form-group">
-            <label class="form-label">Hostname <span class="required">*</span></label>
+            <label class="form-label">{{ trans.hostnameLabel }} <span class="required">*</span></label>
             <input type="text" v-model="editForm.name" class="form-input" placeholder="e.g. My Server">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Group Name</label>
+            <label class="form-label">{{ trans.groupName }}</label>
             <input type="text" v-model="editForm.server_group" class="form-input" placeholder="e.g. US VPS">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Price</label>
+            <label class="form-label">{{ trans.price }}</label>
             <input type="text" v-model="editForm.price" class="form-input" placeholder="e.g. $40/year">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Expiration Date</label>
+            <label class="form-label">{{ trans.expirationDate }}</label>
             <input type="date" v-model="editForm.expire_date" class="form-input">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Bandwidth</label>
+            <label class="form-label">{{ trans.bandwidth }}</label>
             <input type="text" v-model="editForm.bandwidth" class="form-input" placeholder="e.g. 1Gbps">
           </div>
 
           <div class="form-group">
-            <label class="form-label">Traffic Limit</label>
+            <label class="form-label">{{ trans.trafficLimit }}</label>
             <input type="text" v-model="editForm.traffic_limit" class="form-input" placeholder="e.g. 1TB/month">
           </div>
 
@@ -288,15 +290,15 @@
             <div class="checkbox-item" style="margin:0;">
               <input type="checkbox" v-model="editForm.is_hidden">
               <label>
-                <b>Hide from Public</b><br>
-                <span style="font-size:10px;color:var(--text-muted);">Hide this server from non-logged-in users (dashboard & detail page)</span>
+                <b>{{ trans.hideFromPublic }}</b><br>
+                <span style="font-size:10px;color:var(--text-muted);">{{ trans.hideDesc }}</span>
               </label>
             </div>
           </div>
 
           <div class="modal-footer">
-            <button @click="closeEditModal" class="btn">CANCEL</button>
-            <button @click="saveEdit" class="btn btn-primary">SAVE</button>
+            <button @click="closeEditModal" class="btn">{{ trans.cancel }}</button>
+            <button @click="saveEdit" class="btn btn-primary">{{ trans.save }}</button>
           </div>
         </div>
       </div>
@@ -312,35 +314,33 @@
           <div style="margin-bottom: 16px;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
               <span style="color: var(--accent-red); font-size: 20px;">⚠️</span>
-              <span style="color: var(--accent-red); font-weight: 600;">危险操作警告</span>
+              <span style="color: var(--accent-red); font-weight: 600;">{{ trans.dangerWarning }}</span>
             </div>
             <p style="color: var(--text-secondary); font-size: 12px; line-height: 1.6;">
-              删除此服务器将从监控面板中移除该服务器的所有数据。
+              {{ trans.deleteConfirm }}
               <br><br>
-              <strong style="color: var(--text-primary);">建议先在目标服务器上执行卸载命令，以停止探针服务：</strong>
+              <strong style="color: var(--text-primary);">{{ trans.recommendUninstall }}：</strong>
             </p>
           </div>
 
           <div class="cmd-input-wrapper" style="margin-bottom: 12px;">
             <span class="cmd-prompt">$</span>
             <input type="text" readonly value="curl -sL {{ API_BASE }}/install.sh | bash -s uninstall" class="cmd-input" style="flex: 1;">
-            <button @click="copyUninstallCmd" class="btn btn-icon btn-green" title="复制命令" style="margin-left: 8px;">📋</button>
+            <button @click="copyUninstallCmd" class="btn btn-icon btn-green" :title="trans.copy" style="margin-left: 8px;">📋</button>
           </div>
 
           <p style="color: var(--text-muted); font-size: 11px; margin-bottom: 16px;">
-            <span style="color: var(--accent-yellow);">[i]</span> 点击左侧"复制"按钮即可复制卸载命令到剪贴板。
+            <span style="color: var(--accent-yellow);">[i]</span> {{ trans.clickToCopyCmd }}
           </p>
 
           <div class="modal-footer" style="justify-content: space-between;">
-            <button @click="confirmDelete" class="btn btn-red">确认删除</button>
-            <button @click="closeDeleteModal" class="btn">取消</button>
+            <button @click="confirmDelete" class="btn btn-red">{{ trans.confirmDelete }}</button>
+            <button @click="closeDeleteModal" class="btn">{{ trans.cancelAction }}</button>
           </div>
         </div>
       </div>
 
-      <footer class="footer">
-        V1.3 | {{ trans.poweredBy }} <a href="https://github.com/huilang-me/CF-Server-Monitor" target="_blank">CF-Server-Monitor</a>
-      </footer>
+      <Footer />
     </div>
   </div>
 </template>
@@ -348,6 +348,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import TerminalHeader from '../components/TerminalHeader.vue'
+import Footer from '../components/Footer.vue'
 import { adminApi, login, logout as apiLogout, formatBytes } from '../utils/api'
 import { t, currentLang } from '../utils/i18n'
 import { translations } from '../utils/i18n'
@@ -397,18 +398,18 @@ const showDeleteModal = ref(false)
 const deleteServerId = ref('')
 
 const handleLogin = async () => {
-  loginError.value = ''
-  const res = await login(loginForm.value.username, loginForm.value.password)
-  if (res.ok) {
-    isLoggedIn.value = true
-    loadSettings()
-    loadServers()
-    refreshStats()
-  } else {
-    loginError.value = '[ERROR] Invalid username or password'
-    loginForm.value.password = ''
+    loginError.value = ''
+    const res = await login(loginForm.value.username, loginForm.value.password)
+    if (res.ok) {
+      isLoggedIn.value = true
+      loadSettings()
+      loadServers()
+      refreshStats()
+    } else {
+      loginError.value = trans.errorInvalidUsername
+      loginForm.value.password = ''
+    }
   }
-}
 
 const logout = () => {
   apiLogout()
@@ -464,51 +465,51 @@ const loadSettings = async () => {
 }
 
 const saveSettings = async () => {
-  const data = {
-    action: 'save_settings',
-    settings: {
-      custom_bg: settings.value.custom_bg,
-      custom_head: settings.value.custom_head,
-      custom_script: settings.value.custom_script,
-      is_public: settings.value.is_public ? 'true' : 'false',
-      show_price: settings.value.show_price ? 'true' : 'false',
-      show_expire: settings.value.show_expire ? 'true' : 'false',
-      show_bw: settings.value.show_bw ? 'true' : 'false',
-      show_tf: settings.value.show_tf ? 'true' : 'false',
-      tg_notify: settings.value.tg_notify,
-      tg_bot_token: settings.value.tg_bot_token,
-      tg_chat_id: settings.value.tg_chat_id
+    const data = {
+      action: 'save_settings',
+      settings: {
+        custom_bg: settings.value.custom_bg,
+        custom_head: settings.value.custom_head,
+        custom_script: settings.value.custom_script,
+        is_public: settings.value.is_public ? 'true' : 'false',
+        show_price: settings.value.show_price ? 'true' : 'false',
+        show_expire: settings.value.show_expire ? 'true' : 'false',
+        show_bw: settings.value.show_bw ? 'true' : 'false',
+        show_tf: settings.value.show_tf ? 'true' : 'false',
+        tg_notify: settings.value.tg_notify,
+        tg_bot_token: settings.value.tg_bot_token,
+        tg_chat_id: settings.value.tg_chat_id
+      }
+    }
+
+    try {
+      const res = await adminApi(data)
+      if (res.ok) {
+        alert(trans.configSaved)
+        location.reload()
+      } else {
+        const err = await res.json()
+        alert(trans.saveFailed + (err.error || trans.saveFailedUnknown))
+      }
+    } catch (e) {
+      alert(trans.saveFailed + e.message)
     }
   }
 
-  try {
-    const res = await adminApi(data)
-    if (res.ok) {
-      alert('[OK] Configuration saved! Reloading...')
-      location.reload()
-    } else {
-      const err = await res.json()
-      alert('[ERROR] Save failed: ' + (err.error || 'Unknown error'))
+  const loadServers = async () => {
+    try {
+      const res = await adminApi({ action: 'list' })
+      if (res.ok) {
+        const data = await res.json()
+        servers.value = data.servers || []
+        
+        const serverGroups = [...new Set(servers.value.map(s => s.server_group || trans.default))]
+        groups.value = serverGroups
+      }
+    } catch (e) {
+      console.error('[ERROR] Load servers failed:', e)
     }
-  } catch (e) {
-    alert('[ERROR] Save failed: ' + e.message)
   }
-}
-
-const loadServers = async () => {
-  try {
-    const res = await adminApi({ action: 'list' })
-    if (res.ok) {
-      const data = await res.json()
-      servers.value = data.servers || []
-      
-      const serverGroups = [...new Set(servers.value.map(s => s.server_group || 'Default'))]
-      groups.value = serverGroups
-    }
-  } catch (e) {
-    console.error('[ERROR] Load servers failed:', e)
-  }
-}
 
 const refreshStats = async () => {
   try {
@@ -523,22 +524,22 @@ const refreshStats = async () => {
 }
 
 const addServer = async () => {
-  const name = newServerName.value.trim()
-  if (!name) return alert('[WARN] Please enter a server name')
+    const name = newServerName.value.trim()
+    if (!name) return alert(trans.enterServerName)
 
-  try {
-    const res = await adminApi({ action: 'add', name })
-    if (res.ok) {
-      const data = await res.json()
-      alert('[OK] ' + (data.message || 'Server added'))
-      location.reload()
-    } else {
-      alert('[ERROR] Add failed')
+    try {
+      const res = await adminApi({ action: 'add', name })
+      if (res.ok) {
+        const data = await res.json()
+        alert('[OK] ' + (data.message || trans.serverAdded))
+        location.reload()
+      } else {
+        alert(trans.addFailed)
+      }
+    } catch (e) {
+      alert(trans.addFailed + ': ' + e.message)
     }
-  } catch (e) {
-    alert('[ERROR] Add failed: ' + e.message)
   }
-}
 
 const getInstallCommand = (serverId) => {
   const HOST = API_BASE
@@ -599,68 +600,68 @@ const closeEditModal = () => {
 }
 
 const saveEdit = async () => {
-  const data = {
-    action: 'edit',
-    id: editForm.value.id,
-    name: editForm.value.name,
-    server_group: editForm.value.server_group,
-    price: editForm.value.price,
-    expire_date: editForm.value.expire_date,
-    bandwidth: editForm.value.bandwidth,
-    traffic_limit: editForm.value.traffic_limit,
-    is_hidden: editForm.value.is_hidden ? '1' : '0'
-  }
-
-  try {
-    const res = await adminApi(data)
-    if (res.ok) {
-      alert('[OK] Server updated')
-      location.reload()
-    } else {
-      alert('[ERROR] Save failed')
+    const data = {
+      action: 'edit',
+      id: editForm.value.id,
+      name: editForm.value.name,
+      server_group: editForm.value.server_group,
+      price: editForm.value.price,
+      expire_date: editForm.value.expire_date,
+      bandwidth: editForm.value.bandwidth,
+      traffic_limit: editForm.value.traffic_limit,
+      is_hidden: editForm.value.is_hidden ? '1' : '0'
     }
-  } catch (e) {
-    alert('[ERROR] Save failed: ' + e.message)
-  }
-}
 
-const openDeleteModal = (id) => {
-  deleteServerId.value = id
-  showDeleteModal.value = true
-}
-
-const closeDeleteModal = () => {
-  showDeleteModal.value = false
-}
-
-const confirmDelete = async () => {
-  try {
-    const res = await adminApi({ action: 'delete', id: deleteServerId.value })
-    if (res.ok) {
-      location.reload()
-    } else {
-      alert('[ERROR] Delete failed')
+    try {
+      const res = await adminApi(data)
+      if (res.ok) {
+        alert(trans.serverUpdated)
+        location.reload()
+      } else {
+        alert(trans.saveFailed)
+      }
+    } catch (e) {
+      alert(trans.saveFailed + e.message)
     }
-  } catch (e) {
-    alert('[ERROR] Delete failed: ' + e.message)
   }
-}
 
-const batchDelete = async () => {
-  if (selectedServers.value.length === 0) return alert('[WARN] Please select servers to delete')
-  if (!confirm('[?] Delete ' + selectedServers.value.length + ' selected servers? This action is irreversible.')) return
+  const openDeleteModal = (id) => {
+    deleteServerId.value = id
+    showDeleteModal.value = true
+  }
 
-  try {
-    const res = await adminApi({ action: 'batch_delete', ids: selectedServers.value })
-    if (res.ok) {
-      location.reload()
-    } else {
-      alert('[ERROR] Delete failed')
+  const closeDeleteModal = () => {
+    showDeleteModal.value = false
+  }
+
+  const confirmDelete = async () => {
+    try {
+      const res = await adminApi({ action: 'delete', id: deleteServerId.value })
+      if (res.ok) {
+        location.reload()
+      } else {
+        alert(trans.deleteFailed)
+      }
+    } catch (e) {
+      alert(trans.deleteFailed + ': ' + e.message)
     }
-  } catch (e) {
-    alert('[ERROR] Delete failed: ' + e.message)
   }
-}
+
+  const batchDelete = async () => {
+    if (selectedServers.value.length === 0) return alert(trans.selectServers)
+    if (!confirm(trans.confirmDeleteServers + selectedServers.value.length + trans.irreversible)) return
+
+    try {
+      const res = await adminApi({ action: 'batch_delete', ids: selectedServers.value })
+      if (res.ok) {
+        location.reload()
+      } else {
+        alert(trans.deleteFailed)
+      }
+    } catch (e) {
+      alert(trans.deleteFailed + ': ' + e.message)
+    }
+  }
 
 const handleSelectAll = (e) => {
   const checked = e.target.checked
@@ -681,52 +682,52 @@ const getStatusColor = (server) => {
 }
 
 const getStatusText = (server) => {
-  const lastUpdated = new Date(server.last_updated).getTime()
-  return (Date.now() - lastUpdated) < 300000 ? '● ONLINE' : '● OFFLINE'
-}
+    const lastUpdated = new Date(server.last_updated).getTime()
+    return (Date.now() - lastUpdated) < 300000 ? trans.onlineStatus : trans.offlineStatus
+  }
 
-let draggedRow = null
+  let draggedRow = null
 
-const handleDragStart = (e) => {
-  draggedRow = e.target.dataset.serverId
-  e.dataTransfer.effectAllowed = 'move'
-}
+  const handleDragStart = (e) => {
+    draggedRow = e.target.dataset.serverId
+    e.dataTransfer.effectAllowed = 'move'
+  }
 
-const handleDrop = async (e, targetId) => {
-  if (!draggedRow || draggedRow === targetId) return
-  
-  const rows = Array.from(document.querySelectorAll('.server-row'))
-  const draggedIndex = rows.findIndex(r => r.dataset.serverId === draggedRow)
-  const targetIndex = rows.findIndex(r => r.dataset.serverId === targetId)
-  
-  const orders = rows.map(r => r.dataset.serverId)
-  const [dragged] = orders.splice(draggedIndex, 1)
-  orders.splice(targetIndex, 0, dragged)
-  
-  try {
-    const res = await adminApi({ action: 'save_order', orders })
-    if (res.ok) {
-      loadServers()
+  const handleDrop = async (e, targetId) => {
+    if (!draggedRow || draggedRow === targetId) return
+    
+    const rows = Array.from(document.querySelectorAll('.server-row'))
+    const draggedIndex = rows.findIndex(r => r.dataset.serverId === draggedRow)
+    const targetIndex = rows.findIndex(r => r.dataset.serverId === targetId)
+    
+    const orders = rows.map(r => r.dataset.serverId)
+    const [dragged] = orders.splice(draggedIndex, 1)
+    orders.splice(targetIndex, 0, dragged)
+    
+    try {
+      const res = await adminApi({ action: 'save_order', orders })
+      if (res.ok) {
+        loadServers()
+      }
+    } catch (e) {
+      console.error('[ERROR] Save order failed:', e)
     }
-  } catch (e) {
-    console.error('[ERROR] Save order failed:', e)
+    
+    draggedRow = null
   }
-  
-  draggedRow = null
-}
 
-const uploadBg = (e) => {
-  const file = e.target.files[0]
-  if (!file) return
-  if (file.size > 800 * 1024) {
-    alert('[WARN] Image size > 800KB, consider using external URL')
+  const uploadBg = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    if (file.size > 800 * 1024) {
+      alert(trans.imageSizeWarning)
+    }
+    const reader = new FileReader()
+    reader.onload = function(event) {
+      settings.value.custom_bg = event.target.result
+    }
+    reader.readAsDataURL(file)
   }
-  const reader = new FileReader()
-  reader.onload = function(event) {
-    settings.value.custom_bg = event.target.result
-  }
-  reader.readAsDataURL(file)
-}
 
 onMounted(() => {
   initAdmin()

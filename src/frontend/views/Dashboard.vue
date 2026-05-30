@@ -38,7 +38,7 @@
           <span v-if="code !== 'all'">
             <img v-if="code !== 'all'" :src="'https://flagcdn.com/16x12/' + (code || 'xx').toLowerCase() + '.png'" :alt="code">
           </span>
-          {{ code === 'all' ? '[' + trans.all + ']' : code }} {{ count }}
+          {{ code === 'all' ? '[' + trans.all + ']' : code.toUpperCase() }} {{ count }}
         </span>
       </div>
     </div>
@@ -169,9 +169,7 @@
       </div>
     </div>
 
-    <footer class="footer">
-      V1.3 | {{ trans.poweredBy }} <a href="https://github.com/huilang-me/CF-Server-Monitor" target="_blank">CF-Server-Monitor</a>
-    </footer>
+    <Footer />
   </div>
 </template>
 
@@ -179,6 +177,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import TerminalHeader from '../components/TerminalHeader.vue'
 import ServerCard from '../components/ServerCard.vue'
+import Footer from '../components/Footer.vue'
 import { fetchServers, formatBytes } from '../utils/api'
 import { t, currentLang } from '../utils/i18n'
 import { translations } from '../utils/i18n'
@@ -383,7 +382,7 @@ const drawMarkers = () => {
 }
 
 const goToServer = (id) => {
-  window.location.href = `/server?id=${id}`
+  window.location.href = `/server/${id}`
 }
 
 let refreshInterval = null
